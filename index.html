@@ -12,11 +12,6 @@
       body {
          background-color: rgb(31, 31, 31);
       }
-      #canvas {
-         /*background-color: rgb(131, 165, 80);
-         width: 500px;
-         height: 500px;*/
-      }
    </style>
    <body>
       <canvas id="canvas" width="500" height="500"></canvas>
@@ -30,12 +25,30 @@
          const zeilen = 21;
          const spaltenbreite = canvas.width / spalten;
          const zeilenhöhe = canvas.height / zeilen;
-         let snake = [{ x: 0, y: 10 }];
-         let food = { x: 3, y: 3 };
+         let snake = [
+            { x: 9, y: 9 },
+            { x: 8, y: 9 },
+            { x: 7, y: 9 },
+            { x: 6, y: 9 },
+            { x: 5, y: 9 },
+            { x: 4, y: 9 },
+            { x: 3, y: 9 },
+            { x: 2, y: 9 },
+            { x: 1, y: 9 },
+            { x: 0, y: 9 },
+            { x: -1, y: 9 },
+            { x: -2, y: 9 },
+            { x: -3, y: 9 },
+            { x: -4, y: 9 },
+         ];
+         let food;
+         let foodCollected = false;
 
+         placeFood();
          setInterval(gameLoop, geschwindigkeit);
          document.addEventListener("keydown", keydown);
          draw();
+
          function draw() {
             //Hintergrund
             ctx.fillStyle = "black";
@@ -53,11 +66,36 @@
          function add(x, y) {
             ctx.fillRect(x * spaltenbreite, y * zeilenhöhe, spaltenbreite - 2, zeilenhöhe - 2);
          }
+         function shiftSnake() {
+            for (let i = snake.length - 1; i > 0; i--) {
+               const part = snake[i];
+               const lastPart = snake[i - 1];
+               part.x = lastPart.x;
+               part.y = lastPart.y;
+            }
+         }
          function gameLoop() {
+            shiftSnake();
+            if (foodCollected) {
+               snake = [
+                  {
+                     x: snake[0].x,
+                     y: snake[0].y,
+                  },
+                  ...snake,
+               ];
+
+               foodCollected = false;
+            }
             if (direction == "left") snake[0].x--;
             if (direction == "right") snake[0].x++;
             if (direction == "up") snake[0].y--;
             if (direction == "down") snake[0].y++;
+
+            if (snake[0].x == food.x && snake[0].y == food.y) {
+               foodCollected = true;
+               placeFood();
+            }
          }
 
          function keydown(e) {
@@ -68,9 +106,29 @@
             if (taste == "s" || e.key == "ArrowDown") direction = "down";
             if (taste == "d" || e.key == "ArrowRight") direction = "right";
          }
+
          function placeFood() {
-            let randomX = Math.floor(Math.random() * spalten);
-            let randomY = MAth.floor(Math.random() * zeilen);
+            do {
+               var randomX = Math.floor(Math.random() * spalten);
+               var randomY = Math.floor(Math.random() * zeilen);
+            } while (spawn(randomX, randomY));
+
+            food = { x: randomX, y: randomY };
+         }
+
+         function spawn(xValue, yValue) {
+            let rückgabe = false;
+            snake.forEach((item) => {
+               let teilVonSnake = JSON.stringify(item);
+               let spawnPos = '{"x":' + xValue + ',"y":' + yValue + "}";
+
+               if (teilVonSnake == spawnPos) {
+                  console.log("auf snake");
+                  rückgabe = true;
+               }
+            });
+            if (rückgabe == true) return true;
+            else return false;
          }
       </script>
    </body>
