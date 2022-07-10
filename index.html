@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="UTF-8" />
+      <title>Better Snake</title>
+   </head>
+   <style>
+      * {
+         margin: 0;
+         padding: 0;
+      }
+      body {
+         background-color: rgb(31, 31, 31);
+      }
+      #canvas {
+         background-color: rgb(131, 165, 80);
+         /*width: 500px;
+         height: 500px;*/
+      }
+   </style>
+   <body>
+      <canvas id="canvas" width="500" height="500"></canvas>
+
+      <script>
+         let canvas = document.getElementById("canvas");
+         let ctx = canvas.getContext("2d");
+         let geschwindigkeit = 200;
+         let direction = "right";
+         const spalten = 21;
+         const zeilen = 21;
+         const spaltenbreite = canvas.width / spalten;
+         const zeilenhöhe = canvas.height / zeilen;
+         let snake = [{ x: 0, y: 10 }];
+         let food = { x: 3, y: 3 };
+         document.addEventListener("keydown", keydown);
+
+         setInterval(gameLoop, geschwindigkeit);
+         draw();
+         function draw() {
+            //Snake
+            ctx.fillStyle = "blue";
+            snake.forEach((item) => add(item.x, item.y));
+
+            //food
+            ctx.fillStyle = "red";
+            add(food.x, food.y);
+
+            requestAnimationFrame(draw);
+         }
+         function add(x, y) {
+            ctx.fillRect(x * spaltenbreite, y * zeilenhöhe, spaltenbreite - 2, zeilenhöhe - 2);
+         }
+         function gameLoop() {
+            if (direction == "left") snake[0].x--;
+            if (direction == "right") snake[0].x++;
+            if (direction == "up") snake[0].y--;
+            if (direction == "down") snake[0].y++;
+         }
+
+         function keydown(e) {
+            let taste = e.key.toLowerCase();
+
+            if (taste == "w" || e.key == "ArrowUp") direction = "up";
+            if (taste == "a" || e.key == "ArrowLeft") direction = "left";
+            if (taste == "s" || e.key == "ArrowDown") direction = "down";
+            if (taste == "d" || e.key == "ArrowRight") direction = "right";
+         }
+      </script>
+   </body>
+</html>
