@@ -63,6 +63,18 @@
 
             requestAnimationFrame(draw);
          }
+         function testGameOver() {
+            let firstPart = snake[0];
+            let otherParts = snake.slice(1);
+            let duplicate = otherParts.find((part) => part.x == firstPart.x && part.y == firstPart.y);
+            //1. gegen Wand
+            if (snake[0].x < 0 || snake[0].x > spalten - 1 || snake[0].y < 0 || snake[0].y > zeilen - 1 || duplicate) {
+               placeFood();
+               snake = [{ x: 9, y: 9 }];
+               direction = "right";
+            }
+            //2. in sich selbst
+         }
          function add(x, y) {
             ctx.fillRect(x * spaltenbreite, y * zeilenhöhe, spaltenbreite - 2, zeilenhöhe - 2);
          }
@@ -75,7 +87,7 @@
             }
          }
          function gameLoop() {
-            shiftSnake();
+            testGameOver();
             if (foodCollected) {
                snake = [
                   {
@@ -87,6 +99,7 @@
 
                foodCollected = false;
             }
+            shiftSnake();
             if (direction == "left") snake[0].x--;
             if (direction == "right") snake[0].x++;
             if (direction == "up") snake[0].y--;
