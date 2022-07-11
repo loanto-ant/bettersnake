@@ -18,8 +18,7 @@ h4 {
   text-align: center;
 }
 
-/*dialog {
-   background-color: $hintergrund;
-   border: 3px solid white;
-}
-*//*# sourceMappingURL=style.css.map */
+dialog {
+  background-color: rgb(43, 43, 43);
+  border: 3px solid white;
+}/*# sourceMappingURL=style.css.map */
