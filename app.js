@@ -1,6 +1,6 @@
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
-let geschwindigkeit = 150;
+let geschwindigkeit = 100;
 let direction = "right";
 const spalten = 15;
 const zeilen = 15;
