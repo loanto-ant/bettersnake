@@ -1,3 +1,4 @@
+$hintergrund: rgb(43, 43, 43);
 * {
    margin: 0;
    padding: 0;
@@ -6,7 +7,7 @@
    color: white;
 }
 body {
-   background-color: rgb(31, 31, 31);
+   background-color: $hintergrund;
    display: flex;
    align-items: center;
    justify-content: center;
@@ -15,3 +16,8 @@ h1,
 h4 {
    text-align: center;
 }
+/*dialog {
+   background-color: $hintergrund;
+   border: 3px solid white;
+}
+*/

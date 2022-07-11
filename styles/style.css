@@ -7,7 +7,7 @@
 }
 
 body {
-  background-color: rgb(31, 31, 31);
+  background-color: rgb(43, 43, 43);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,4 +16,10 @@ body {
 h1,
 h4 {
   text-align: center;
-}/*# sourceMappingURL=style.css.map */
+}
+
+/*dialog {
+   background-color: $hintergrund;
+   border: 3px solid white;
+}
+*//*# sourceMappingURL=style.css.map */
