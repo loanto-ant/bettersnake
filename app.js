@@ -9,6 +9,12 @@ const zeilenhöhe = canvas.height / zeilen;
 let snake = [{ x: 9, y: 9 }];
 let food;
 let foodCollected = false;
+let refresh;
+let score = 0;
+let scoreOutput = document.querySelectorAll(".score");
+let highscoreOutput = document.querySelectorAll(".highscore");
+
+highscoreOutput.forEach((value) => (value.innerText = "Highscore: " + cookie(score)));
 
 document.addEventListener("keydown", keydown);
 
@@ -32,11 +38,10 @@ function testGameOver() {
    let duplicate = otherParts.find((part) => part.x == firstPart.x && part.y == firstPart.y);
    //1. gegen Wand
    if (snake[0].x < 0 || snake[0].x > spalten - 1 || snake[0].y < 0 || snake[0].y > zeilen - 1 || duplicate) {
-      placeFood();
-      snake = [{ x: 9, y: 9 }];
-      direction = "right";
+      clearInterval(refresh);
+      if (score == cookie(score)) document.getElementById("neu_highscore").innerText = "Neuer Highscore!!";
+      document.getElementById("dialog").show();
    }
-   //2. in sich selbst
 }
 function add(x, y) {
    ctx.fillRect(x * spaltenbreite, y * zeilenhöhe, spaltenbreite - 2, zeilenhöhe - 2);
@@ -70,6 +75,9 @@ function gameLoop() {
 
    if (snake[0].x == food.x && snake[0].y == food.y) {
       foodCollected = true;
+      score++;
+      scoreOutput.forEach((value) => (value.innerText = "Score: " + score));
+      highscoreOutput.forEach((value) => (value.innerText = "Highscore: " + cookie(score)));
       placeFood();
    }
 }
@@ -81,6 +89,7 @@ function keydown(e) {
    if (taste == "a" || e.key == "ArrowLeft") direction = "left";
    if (taste == "s" || e.key == "ArrowDown") direction = "down";
    if (taste == "d" || e.key == "ArrowRight") direction = "right";
+   if (taste == "+") start();
 }
 
 function placeFood() {
@@ -107,7 +116,49 @@ function spawn(xValue, yValue) {
    else return false;
 }
 function start() {
+   document.getElementById("dialog").close();
    placeFood();
-   setInterval(gameLoop, geschwindigkeit);
+   direction = "right";
+   snake = [{ x: 9, y: 9 }];
+   score = 0;
+   scoreOutput.forEach((value) => (value.innerText = "Score: " + score));
+   highscoreOutput.forEach((value) => (value.innerText = "Highscore: " + cookie(score)));
+   refresh = setInterval(gameLoop, geschwindigkeit);
    draw();
+}
+function cookie(score) {
+   //checken if counter > cookie highscore
+   //falls ja, dann cookie highscore neu setzen
+   let cookie1 = document.cookie.split("=");
+   let highscore = parseInt(cookie1[1]);
+   const d = new Date();
+   d.setTime(d.getTime() + 365 * 24 * 60 * 60 * 1000);
+   let expires = "expires=" + d.toUTCString();
+   if (isNaN(highscore)) {
+      highscore = 0;
+   }
+   if (score > highscore) {
+      document.cookie = "better_highscore=" + score + "; SameSite=None; Secure; " + expires;
+      return score;
+   }
+   return highscore;
+}
+function downloadCanvas() {
+   //Spielstand auf Canvas schreiben
+   ctx.fillStyle = "white";
+   ctx.font = "25px Major Mono Display";
+   ctx.fillText("better snake", 15, 30);
+   ctx.fillText("score: " + score, 15, 55);
+   // Convert our canvas to a data URL
+   let canvasUrl = canvas.toDataURL();
+   // Create an anchor, and set the href value to our data URL
+   const createEl = document.createElement("a");
+   createEl.href = canvasUrl;
+
+   // This is the name of our downloaded file
+   createEl.download = "better_snake_screenshot_" + score;
+
+   // Click the download button, causing a download, and then remove it
+   createEl.click();
+   createEl.remove();
 }

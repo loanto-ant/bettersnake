@@ -1,46 +1,36 @@
 <!DOCTYPE html>
 <html>
    <head>
+      <link rel="stylesheet" href="./style.css" />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
       <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet" />
       <meta charset="UTF-8" />
-      <link rel="styleshet" href="style.css" />
+
       <title>Better Snake</title>
-      <style>
-         /** {
-            margin: 0;
-            padding: 0;
-            text-transform: lowercase;
-            font-family: "Major Mono Display", monospace;
-            color: white;
-         }
-
-         body {
-            background-color: rgb(43, 43, 43);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-         }
-
-         h1,
-         h4 {
-            text-align: center;
-         }*/
-      </style>
    </head>
    <body>
       <div id="main">
          <h1>Better Snake</h1>
          <h4>Retro Edition</h4>
-         <div id="controls"><button onclick="start()">Start</button></div>
-         <dialog open>
-            <h2>Game Over</h2>
-            <p>Score: 34</p>
-            <p>Highscore: 74</p>
-         </dialog>
+         <div id="controls">
+            <button onclick="start()">Start</button>
+            <p class="score">Score: 0</p>
+            <p class="highscore">Highscore:</p>
+         </div>
 
-         <canvas id="canvas" width="500" height="500"></canvas>
+         <div id="spielfeld">
+            <dialog id="dialog">
+               <h2>Game Over</h2>
+               <p class="score">Score:</p>
+               <p class="highscore">Highscore:</p>
+               <p id="neu_highscore"></p>
+               <button onclick="start()">Play again</button>
+               <button onclick="downloadCanvas()">Share Result</button>
+               <button onclick="document.getElementById('dialog').close()">Close</button>
+            </dialog>
+            <canvas id="canvas" width="500" height="500"></canvas>
+         </div>
       </div>
 
       <script src="app.js"></script>
