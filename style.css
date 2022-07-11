@@ -13,6 +13,10 @@ body {
   justify-content: center;
 }
 
+#main {
+  padding-top: 20px;
+}
+
 h1,
 h4 {
   text-align: center;
@@ -44,6 +48,7 @@ dialog button {
 canvas {
   background-color: black;
   position: relative;
+  border: 3px solid white;
 }
 
 button {
@@ -61,4 +66,49 @@ button:hover {
 }
 #controls * {
   display: inline;
+}
+
+#bilder {
+  display: none;
+}
+
+@media only screen and (max-width: 600px) {
+  h1 {
+    font-size: 100px;
+  }
+  h2 {
+    font-size: 80px;
+  }
+  h4 {
+    font-size: 70px;
+  }
+  p {
+    font-size: 45px;
+  }
+  #controls {
+    margin: 20px 0px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+  }
+  #controls * {
+    display: block;
+  }
+  #controls p {
+    font-size: 60px;
+  }
+  canvas {
+    width: 99vw;
+    height: 99vw;
+  }
+  button {
+    font-size: 60px;
+  }
+  dialog > * {
+    margin: 8px 0px;
+  }
+  dialog button {
+    margin: 20px 0px;
+  }
 }/*# sourceMappingURL=style.css.map */

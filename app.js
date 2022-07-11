@@ -1,9 +1,9 @@
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
-let geschwindigkeit = 100;
+let geschwindigkeit = 150;
 let direction = "right";
-const spalten = 21;
-const zeilen = 21;
+const spalten = 15;
+const zeilen = 15;
 const spaltenbreite = canvas.width / spalten;
 const zeilenhöhe = canvas.height / zeilen;
 let snake = [{ x: 9, y: 9 }];
@@ -13,10 +13,14 @@ let refresh;
 let score = 0;
 let scoreOutput = document.querySelectorAll(".score");
 let highscoreOutput = document.querySelectorAll(".highscore");
+let finger = new Array();
+let xDifferenz, yDifferenz, dataX, dataY, xDifferenz_abs, yDifferenz_abs;
 
 highscoreOutput.forEach((value) => (value.innerText = "Highscore: " + cookie(score)));
 
 document.addEventListener("keydown", keydown);
+document.addEventListener("touchmove", touch, { passive: false });
+document.addEventListener("touchend", touchend, { passive: false });
 
 function draw() {
    //Hintergrund
@@ -161,4 +165,33 @@ function downloadCanvas() {
    // Click the download button, causing a download, and then remove it
    createEl.click();
    createEl.remove();
+}
+function touch(event) {
+   event.preventDefault();
+   //console.log(event.touches, event.type);
+   //console.log(event.touches);
+   dataX = event.touches[0].pageX;
+   dataY = event.touches[0].pageY;
+
+   finger = [
+      {
+         x: dataX,
+         y: dataY,
+      },
+      ...finger,
+   ];
+   xDifferenz = finger[0].x - finger[finger.length - 1].x;
+   yDifferenz = finger[0].y - finger[finger.length - 1].y;
+
+   xDifferenz_abs = Math.abs(xDifferenz);
+   yDifferenz_abs = Math.abs(yDifferenz);
+
+   if (xDifferenz < 0 && xDifferenz_abs > yDifferenz_abs) direction = "left";
+   else if (xDifferenz > 0 && xDifferenz_abs > yDifferenz_abs) direction = "right";
+   else if (yDifferenz < 0 && yDifferenz_abs > xDifferenz_abs) direction = "up";
+   else if (yDifferenz > 0 && yDifferenz_abs > xDifferenz_abs) direction = "down";
+}
+function touchend(event) {
+   finger.length = 0;
+   console.log(direction);
 }
