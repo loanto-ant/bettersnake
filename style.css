@@ -7,7 +7,7 @@
 }
 
 body {
-  background-color: rgb(43, 43, 43);
+  background-color: rgb(27, 27, 27);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,8 +29,8 @@ h4 {
 }
 
 dialog {
-  background-color: rgb(43, 43, 43);
-  border: 3px solid white;
+  background-color: rgb(27, 27, 27);
+  border: 3px solid rgb(110, 110, 110);
   padding: 15px;
   margin: 0 auto;
   z-index: 2;
@@ -48,17 +48,17 @@ dialog button {
 canvas {
   background-color: black;
   position: relative;
-  border: 3px solid white;
+  border: 3px solid rgb(110, 110, 110);
 }
 
 button {
-  background-color: rgb(43, 43, 43);
+  background-color: rgb(27, 27, 27);
   padding: 4px;
-  border: 2px solid white;
-  transition: border 0.1s;
+  border: 2px solid rgb(110, 110, 110);
+  transition: border 0.05s;
 }
 button:hover {
-  border: 2px solid rgb(90, 90, 90);
+  border: 2px solid rgb(204, 204, 204);
 }
 
 #controls {
@@ -72,43 +72,31 @@ button:hover {
   display: none;
 }
 
-@media (max-width: 600px) {
-  h1 {
-    font-size: 100px;
-  }
-  h2 {
-    font-size: 80px;
-  }
-  h4 {
-    font-size: 70px;
-  }
-  p {
-    font-size: 45px;
-  }
+@media all and (max-width: 600px) {
   #controls {
     margin: 20px 0px;
     display: flex;
     flex-wrap: wrap;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
   }
   #controls * {
-    display: block;
-  }
-  #controls p {
-    font-size: 60px;
+    margin: 5px;
   }
   canvas {
     width: 99vw;
     height: 99vw;
   }
-  button {
-    font-size: 60px;
-  }
   dialog > * {
     margin: 8px 0px;
   }
   dialog button {
-    margin: 20px 0px;
+    margin: 10px 0px;
+    width: 100%;
+  }
+  button {
+    height: 40px;
+    width: 40%;
   }
 }/*# sourceMappingURL=style.css.map */

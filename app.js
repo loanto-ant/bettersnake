@@ -44,6 +44,7 @@ function testGameOver() {
    if (snake[0].x < 0 || snake[0].x > spalten - 1 || snake[0].y < 0 || snake[0].y > zeilen - 1 || duplicate) {
       clearInterval(refresh);
       if (score == cookie(score)) document.getElementById("neu_highscore").innerText = "Neuer Highscore!!";
+      else document.getElementById("neu_highscore").innerText = "";
       document.getElementById("dialog").show();
    }
 }
